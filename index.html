@@ -185,18 +185,18 @@ nav a:hover{
   margin-bottom:40px;
 }
 
-/* ===== GALERIA DE MATERIAIS (HERO) SEM CORTAR ===== */
+/* ===== GALERIA DE MATERIAIS (HERO) RESPONSIVA ===== */
 .hero .galeria {
-  max-width: 1000px; /* largura máxima da galeria */
+  max-width: 1200px;       /* aumenta a largura total da galeria */
   margin: 0 auto 60px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas no desktop */
   gap: 20px;
 }
 
 .hero .galeria img {
-  width: 100%; /* ocupa toda a coluna */
-  height: auto; /* mantém proporção original */
+  width: 100%;      /* ocupa toda a coluna */
+  height: auto;     /* mantém proporção */
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.3s;
@@ -209,14 +209,14 @@ nav a:hover{
 /* RESPONSIVO PARA CELULAR */
 @media (max-width: 768px) {
   .hero .galeria {
-    grid-template-columns: repeat(2, 1fr); /* mantém 2 colunas */
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas no celular */
     gap: 15px;
-    max-width: 100%; /* ocupa a largura total da tela */
+    max-width: 100%;
   }
 
   .hero .galeria img {
     width: 100%;
-    height: auto; /* mantém proporção */
+    height: auto;   /* mantém proporção */
   }
 }
 
@@ -754,6 +754,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 

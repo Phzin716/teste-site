@@ -714,23 +714,62 @@ Ler mais
   <h3>Contato</h3>
 
   <div class="contact-box">
-    <p>
-      Telefone:
+
+    <div class="linha-contato">
+      <span class="titulo">Telefone:</span>
       <a href="tel:+5519994844122">(19) 99484-4122</a>
-    </p>
+    </div>
 
-    <p>
-      Email: <a href="mailto:bcbancadas@gmail.com">bcbancadas@gmail.com</a>
-    </p>
+    <div class="linha-contato">
+      <span class="titulo">Email:</span>
+      <a href="mailto:bcbancadas@gmail.com">bcbancadas@gmail.com</a>
+    </div>
 
-    <p>
-      Instagram:
-      <a href="https://www.instagram.com/becbancadas/" target="_blank">
-        @becbancadas
-      </a>
-    </p>
+    <div class="linha-contato">
+      <span class="titulo">Instagram:</span>
+      <a href="https://www.instagram.com/becbancadas/" target="_blank">@becbancadas</a>
+    </div>
+
   </div>
 </section>
+
+<style>
+
+#contato{
+  text-align:center;
+  padding:40px 20px;
+}
+
+#contato h3{
+  font-size:32px;
+  margin-bottom:30px;
+  color:#fff;
+}
+
+.contact-box{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+}
+
+.linha-contato{
+  display:flex;
+  gap:8px;
+  font-size:20px;
+}
+
+.titulo{
+  color:#ffffff;
+}
+
+.linha-contato a{
+  color:#d4af37; /* dourado/amarelo igual da foto */
+  text-decoration:none;
+  font-weight:500;
+}
+
+</style>
 <script>
 
 function abrirImagem(img){
@@ -767,6 +806,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 

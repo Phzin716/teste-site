@@ -856,88 +856,7 @@ function autoScrollCarousel() {
 }
 setInterval(autoScrollCarousel, 50);
 </script>
-/* ================= FEEDBACKS ================= */
-#feedbacks {
-  padding: 80px 20px;
-  background: #111; /* leve contraste com o fundo do site */
-  text-align: center;
-}
 
-#feedbacks h3 {
-  font-size: 32px;
-  color: #c9a24d;
-  margin-bottom: 40px;
-  font-family: 'Playfair Display', serif;
-}
-
-/* CARROSSEL HORIZONTAL */
-.feedback-carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  scroll-behavior: smooth;
-  padding-bottom: 20px;
-  justify-content: center;
-}
-
-.feedback-carousel::-webkit-scrollbar {
-  display: none; /* esconde a barra de rolagem */
-}
-
-/* CADA CARTÃO */
-.feedback-card {
-  background: #222;
-  color: #fff;
-  min-width: 250px;
-  max-width: 300px;
-  padding: 20px;
-  border-radius: 10px;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  transition: transform 0.3s;
-}
-
-.feedback-card:hover {
-  transform: scale(1.05);
-}
-
-/* NOME OU EMAIL */
-.feedback-nome {
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-/* ESTRELAS */
-.feedback-estrelas {
-  color: #c9a24d;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-/* TEXTO DO FEEDBACK */
-.feedback-texto {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #ccc;
-}
-
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .feedback-card {
-    min-width: 220px;
-    max-width: 250px;
-    padding: 15px;
-  }
-
-  #feedbacks h3 {
-    font-size: 26px;
-  }
-
-  .feedback-texto {
-    font-size: 14px;
-  }
-}
 </style>
 
 <script>
@@ -1013,6 +932,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 

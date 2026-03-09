@@ -819,47 +819,187 @@ Ler mais
 </style>
 
 <script>
-// FORMULÁRIO DE FEEDBACK
-const form = document.getElementById("form-feedback");
-const carousel = document.querySelector(".feedback-carousel");
+<!-- SEÇÃO FEEDBACKS -->
+<section id="feedbacks">
+  <h3>O que nossos clientes dizem</h3>
+  
+  <!-- Caixa para enviar feedback -->
+  <div class="feedback-form">
+    <input type="text" id="nome" placeholder="Seu nome" required>
+    <input type="email" id="email" placeholder="Seu email (opcional)">
+    <select id="nota">
+      <option value="5">★★★★★</option>
+      <option value="4">★★★★☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="1">★☆☆☆☆</option>
+    </select>
+    <textarea id="comentario" placeholder="Deixe seu feedback..." required></textarea>
+    <button onclick="enviarFeedback()">Enviar Feedback</button>
+    <p id="status-msg"></p>
+  </div>
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+  <!-- Carrossel de feedbacks -->
+  <div class="feedback-carousel" id="feedback-carousel">
+    <!-- Feedbacks aparecerão aqui -->
+  </div>
+</section>
 
-  const nome = document.getElementById("nome-feedback").value;
-  const estrelas = document.getElementById("nota-feedback").value;
-  const texto = document.getElementById("texto-feedback").value;
-
-  // CRIA NOVO CARD
-  const card = document.createElement("div");
-  card.classList.add("feedback-card");
-  card.innerHTML = `
-    <div class="feedback-nome">${nome}</div>
-    <div class="feedback-estrelas">${"⭐".repeat(estrelas)}</div>
-    <p class="feedback-texto">${texto}</p>
-  `;
-
-  carousel.appendChild(card);
-
-  // LIMPA FORMULÁRIO
-  form.reset();
-});
-
-// AUTO-SCROLL HORIZONTAL DO CARROSSEL
-let scrollAmount = 0;
-function autoScrollCarousel() {
-  scrollAmount += 1;
-  if(scrollAmount >= carousel.scrollWidth - carousel.clientWidth){
-    scrollAmount = 0;
-  }
-  carousel.scrollTo({ left: scrollAmount, behavior: "smooth" });
+<style>
+#feedbacks {
+  padding: 60px 20px;
+  text-align: center;
 }
-setInterval(autoScrollCarousel, 50);
-</script>
 
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.feedback-form button {
+  background: #c9a24d;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.feedback-form button:hover {
+  transform: scale(1.05);
+}
+
+.feedback-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-behavior: smooth;
+  padding-bottom: 20px;
+}
+
+.feedback-card {
+  min-width: 250px;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.feedback-card h4 {
+  margin-bottom: 5px;
+}
+
+.feedback-card .stars {
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.feedback-card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
 </style>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
+const SECRET_KEY = "BCMARMORARIA2026"; // chave secreta do site
+
+// Configuração Firebase (substitua pelos seus dados)
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  databaseURL: "https://bcbancadas-48ae1-default-rtdb.firebaseio.com",
+  projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com",
+  messagingSenderId: "SUA_ID",
+  appId: "SEU_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Enviar feedback
+function enviarFeedback() {
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
+  const nota = document.getElementById("nota").value;
+  const comentario = document.getElementById("comentario").value;
+  const status = document.getElementById("status-msg");
+
+  if (!nome || !comentario) {
+    status.innerText = "Preencha nome e comentário!";
+    return;
+  }
+
+  const feedback = {
+    key: SECRET_KEY,
+    nome: nome,
+    email: email,
+    nota: nota,
+    comentario: comentario,
+    data: new Date().toISOString()
+  };
+
+  db.ref("feedbacks").push(feedback, (error) => {
+    if (error) {
+      status.innerText = "Erro ao enviar, tente novamente.";
+    } else {
+      status.innerText = "Feedback enviado com sucesso!";
+      document.getElementById("nome").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("nota").value = "5";
+      document.getElementById("comentario").value = "";
+      carregarFeedbacks(); // atualiza carrossel
+    }
+  });
+}
+
+// Carrossel automático
+function carregarFeedbacks() {
+  const container = document.getElementById("feedback-carousel");
+  container.innerHTML = "";
+  db.ref("feedbacks").once("value", snapshot => {
+    snapshot.forEach(item => {
+      const f = item.val();
+      const card = document.createElement("div");
+      card.className = "feedback-card";
+      card.innerHTML = `
+        <h4>${f.nome}${f.email ? " (" + f.email + ")" : ""}</h4>
+        <div class="stars">${"★".repeat(f.nota)}${"☆".repeat(5 - f.nota)}</div>
+        <p>${f.comentario}</p>
+      `;
+      container.appendChild(card);
+    });
+  });
+}
+
+// Inicializa
+carregarFeedbacks();
+
+// rolagem automática
+setInterval(() => {
+  const container = document.getElementById("feedback-carousel");
+  container.scrollBy({ left: 260, behavior: "smooth" });
+}, 4000);
+</script>
 // AUTO-SCROLL HORIZONTAL DO CARROSSEL
 const carousel = document.querySelector(".feedback-carousel");
 let scrollAmount = 0;
@@ -932,6 +1072,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 

@@ -622,7 +622,7 @@ nav.active{
 <!-- SEÇÃO SERVIÇOS ENTREGUES -->
 <section id="produtos">
   <h3>Serviços entregues</h3>
-  <div class="servicos">
+  <div class="galeria-2x3">
   <img src="imagens/foto1.jpeg" alt="Foto 1">
   <img src="imagens/foto2.jpeg" alt="Foto 2">
   <img src="imagens/foto3.jpeg" alt="Foto 3">
@@ -630,7 +630,29 @@ nav.active{
   <img src="imagens/foto5.jpeg" alt="Foto 5">
   <img src="imagens/foto6.jpeg" alt="Foto 6">
 </div>
-</section>
+
+<style>
+.galeria-2x3 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  gap: 20px; /* espaçamento entre imagens */
+  max-width: 600px; /* largura máxima da galeria */
+  margin: 0 auto; /* centraliza na página */
+}
+
+.galeria-2x3 img {
+  width: 100%; /* ocupa toda a coluna */
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.galeria-2x3 img:hover {
+  transform: scale(1.05);
+}
+</style>
 
 <!-- SEÇÃO SOBRE NOS (MOVIDA PARA BAIXO DE SERVIÇOS) -->
 <section id="sobre" class="sobre">
@@ -724,6 +746,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 

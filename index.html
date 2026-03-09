@@ -698,43 +698,164 @@ Ler mais
 </div>
   </div>
 </section>
-<!-- SEÇÃO DE FEEDBACKS -->
+<!-- SEÇÃO DE FEEDBACKS INTERATIVA -->
 <section id="feedbacks">
   <h3>O que nossos clientes dizem</h3>
+
+  <!-- CARROSSEL -->
   <div class="feedback-carousel">
 
-    <!-- FEEDBACK 1 -->
+    <!-- FEEDBACKS EXISTENTES -->
     <div class="feedback-card">
       <div class="feedback-nome">João S.</div>
       <div class="feedback-estrelas">⭐⭐⭐⭐⭐</div>
       <p class="feedback-texto">Excelente trabalho! A qualidade das pedras e o acabamento foram impecáveis.</p>
     </div>
 
-    <!-- FEEDBACK 2 -->
-    <div class="feedback-card">
-      <div class="feedback-nome">Maria C.</div>
-      <div class="feedback-estrelas">⭐⭐⭐⭐</div>
-      <p class="feedback-texto">Muito satisfeita com a entrega rápida e o atendimento cordial.</p>
-    </div>
-
-    <!-- FEEDBACK 3 -->
-    <div class="feedback-card">
-      <div class="feedback-nome">Carlos M.</div>
-      <div class="feedback-estrelas">⭐⭐⭐⭐⭐</div>
-      <p class="feedback-texto">Recomendo a todos! Profissionais competentes e materiais de alta qualidade.</p>
-    </div>
-
-    <!-- FEEDBACK 4 -->
-    <div class="feedback-card">
-      <div class="feedback-nome">Ana P.</div>
-      <div class="feedback-estrelas">⭐⭐⭐⭐</div>
-      <p class="feedback-texto">Ficou maravilhoso! Superou minhas expectativas.</p>
-    </div>
-
   </div>
+
+  <!-- FORMULÁRIO DE FEEDBACK -->
+  <form id="form-feedback" style="margin-top:40px; max-width:600px; margin-left:auto; margin-right:auto; text-align:left;">
+    <label>Nome ou Email:</label>
+    <input type="text" id="nome-feedback" placeholder="Digite seu nome ou email" required style="width:100%; padding:10px; margin:5px 0; border-radius:5px; border:none;">
+
+    <label>Nota:</label>
+    <select id="nota-feedback" required style="width:100%; padding:10px; margin:5px 0; border-radius:5px; border:none;">
+      <option value="">Selecione a nota</option>
+      <option value="1">⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="5">⭐⭐⭐⭐⭐</option>
+    </select>
+
+    <label>Comentário:</label>
+    <textarea id="texto-feedback" placeholder="Escreva seu feedback..." required style="width:100%; padding:10px; margin:5px 0; border-radius:5px; border:none;"></textarea>
+
+    <button type="submit" style="background:#c9a24d; color:#000; font-weight:bold; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Enviar Feedback</button>
+  </form>
 </section>
 
 <style>
+/* ================= FEEDBACKS ================= */
+#feedbacks {
+  padding: 80px 20px;
+  background: #111;
+  text-align: center;
+}
+
+#feedbacks h3 {
+  font-size: 32px;
+  color: #c9a24d;
+  margin-bottom: 40px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* CARROSSEL HORIZONTAL */
+.feedback-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-behavior: smooth;
+  padding-bottom: 20px;
+  justify-content: center;
+}
+
+.feedback-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* CADA CARTÃO */
+.feedback-card {
+  background: #222;
+  color: #fff;
+  min-width: 250px;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: transform 0.3s;
+}
+
+.feedback-card:hover {
+  transform: scale(1.05);
+}
+
+.feedback-nome {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.feedback-estrelas {
+  color: #c9a24d;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.feedback-texto {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .feedback-card {
+    min-width: 220px;
+    max-width: 250px;
+    padding: 15px;
+  }
+
+  #feedbacks h3 {
+    font-size: 26px;
+  }
+
+  .feedback-texto {
+    font-size: 14px;
+  }
+}
+</style>
+
+<script>
+// FORMULÁRIO DE FEEDBACK
+const form = document.getElementById("form-feedback");
+const carousel = document.querySelector(".feedback-carousel");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nome = document.getElementById("nome-feedback").value;
+  const estrelas = document.getElementById("nota-feedback").value;
+  const texto = document.getElementById("texto-feedback").value;
+
+  // CRIA NOVO CARD
+  const card = document.createElement("div");
+  card.classList.add("feedback-card");
+  card.innerHTML = `
+    <div class="feedback-nome">${nome}</div>
+    <div class="feedback-estrelas">${"⭐".repeat(estrelas)}</div>
+    <p class="feedback-texto">${texto}</p>
+  `;
+
+  carousel.appendChild(card);
+
+  // LIMPA FORMULÁRIO
+  form.reset();
+});
+
+// AUTO-SCROLL HORIZONTAL DO CARROSSEL
+let scrollAmount = 0;
+function autoScrollCarousel() {
+  scrollAmount += 1;
+  if(scrollAmount >= carousel.scrollWidth - carousel.clientWidth){
+    scrollAmount = 0;
+  }
+  carousel.scrollTo({ left: scrollAmount, behavior: "smooth" });
+}
+setInterval(autoScrollCarousel, 50);
+</script>
 /* ================= FEEDBACKS ================= */
 #feedbacks {
   padding: 80px 20px;
@@ -892,6 +1013,7 @@ function toggleMenu(){
 </body>
 
 </html>
+
 
 
 
